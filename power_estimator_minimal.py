@@ -307,17 +307,6 @@ label {
     overflow: hidden;
 }
 
-.stButton > button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.1);
-    transition: left 0.3s ease;
-}
-
 .stButton > button:hover {
     background: linear-gradient(135deg, var(--primary-light) 0%, var(--primary) 100%) !important;
     box-shadow: var(--shadow-lg), var(--shadow-glow) !important;
@@ -360,7 +349,7 @@ label {
 }
 
 .streamlit-expanderHeader:hover {
-    background: linear-gradient(90deg, var(--bg-hover) 0%, var(--bg-active) 100%, rgba(56, 139, 253, 0.1)) !important;
+    background: linear-gradient(90deg, var(--bg-hover) 0%, rgba(56, 139, 253, 0.1) 100%) !important;
     border-color: var(--primary-light) !important;
     box-shadow: var(--shadow-sm) !important;
 }
@@ -371,7 +360,6 @@ label {
     border-radius: 0 0 var(--radius-md) var(--radius-md) !important;
     padding: var(--space-xl) !important;
     background: var(--bg-secondary) !important;
-    gap: var(--space-lg);
 }
 
 /* ============ SLIDER STYLES ============ */
@@ -605,7 +593,6 @@ label {
     outline-offset: 2px;
 }
 
-/* Reduce motion for animations */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -743,7 +730,7 @@ def calculateAll(facility_mw, mv_buses, lv_buses, project_type, voltage, region,
     # Reporting cost
     total_reporting_cost = 0
     if report_mode == "% of Study Cost":
-        total_reporting_cost = total_report_hours * 1200 * report_complexity  # Using standard rate
+        total_reporting_cost = total_report_hours * 1200 * report_complexity
     else:
         total_reporting_cost = report_fixed * (len(selected_studies) / 7)
     
@@ -809,24 +796,19 @@ col_left, col_right = st.columns(2, gap="large")
 
 with col_left:
     st.markdown('<div class="card-premium"><div class="card-content">', unsafe_allow_html=True)
-    
     facility_mw = st.number_input("🔌 Facility Capacity (MW)", value=10.0, min_value=0.5, max_value=500.0, step=0.5)
-    
     col_mv, col_lv = st.columns(2)
     with col_mv:
         mv_buses = st.number_input("MV Buses", value=24, min_value=1, max_value=200)
     with col_lv:
         lv_buses = st.number_input("LV Buses", value=54, min_value=1, max_value=300)
-    
     st.markdown('</div></div>', unsafe_allow_html=True)
 
 with col_right:
     st.markdown('<div class="card-premium"><div class="card-content">', unsafe_allow_html=True)
-    
     project_type = st.selectbox("🏢 Project Type", list(PROJECT_FACTORS.keys()), index=0)
     voltage = st.selectbox("⚡ Highest Voltage (kV)", list(VOLTAGE_FACTORS.keys()), index=1)
     region = st.selectbox("🌍 Region", list(REGION_FACTORS.keys()), index=0)
-    
     st.markdown('</div></div>', unsafe_allow_html=True)
 
 # ============ SECTION 2: STUDIES SELECTION ============
